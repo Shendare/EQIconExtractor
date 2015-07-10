@@ -50,9 +50,9 @@
             this.labelInputPath.AutoSize = true;
             this.labelInputPath.Location = new System.Drawing.Point(12, 9);
             this.labelInputPath.Name = "labelInputPath";
-            this.labelInputPath.Size = new System.Drawing.Size(215, 13);
+            this.labelInputPath.Size = new System.Drawing.Size(186, 13);
             this.labelInputPath.TabIndex = 0;
-            this.labelInputPath.Text = "&Input Path (Generally EverQuest\\ui\\default):";
+            this.labelInputPath.Text = "&Input Path (EverQuest\\uifiles\\default):";
             // 
             // textInputPath
             // 
@@ -79,9 +79,9 @@
             this.labelOutputPath.AutoSize = true;
             this.labelOutputPath.Location = new System.Drawing.Point(12, 61);
             this.labelOutputPath.Name = "labelOutputPath";
-            this.labelOutputPath.Size = new System.Drawing.Size(334, 13);
+            this.labelOutputPath.Size = new System.Drawing.Size(136, 13);
             this.labelOutputPath.TabIndex = 3;
-            this.labelOutputPath.Text = "&Output Path (Will be filled with spell_icons and item_icons subfolders):";
+            this.labelOutputPath.Text = "&Output Path for PNG icons:";
             // 
             // textOutputPath
             // 

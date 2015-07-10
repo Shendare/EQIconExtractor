@@ -20,6 +20,9 @@ namespace EQIconExtractor
         private int _SpellIcons;
         private int _ItemIcons;
 
+        private int _TotalSpellIconCount;
+        private int _TotalItemIconCount;
+
         private const int _SpellIconsPerFile = 36;
         private const int _ItemIconsPerFile = 36;
 
@@ -45,6 +48,9 @@ namespace EQIconExtractor
         {
             buttonConvert.Enabled = false;
             buttonCancel.Enabled = true;
+
+            _TotalItemIconCount = 0;
+            _TotalSpellIconCount = 0;
 
             _InputFolder = textInputPath.Text;
             _OutputFolder = textOutputPath.Text;
@@ -104,6 +110,7 @@ namespace EQIconExtractor
                                 _y += _SpellIconSize.Y + _SpellIconPadding.Y;
                             }
 
+                            _TotalSpellIconCount++;
                             threadSpellIcons.ReportProgress(_count++);
 
                             if (threadSpellIcons.CancellationPending)
@@ -201,6 +208,7 @@ namespace EQIconExtractor
                                 _x += _ItemIconSize.X + _ItemIconPadding.X;
                             }
 
+                            _TotalItemIconCount++;
                             threadItemIcons.ReportProgress(_count++);
 
                             if (threadItemIcons.CancellationPending)
@@ -236,6 +244,8 @@ namespace EQIconExtractor
             
             buttonCancel.Enabled = false;
             buttonConvert.Enabled = true;
+
+            MessageBox.Show("Spell Icons Extracted: " + _TotalSpellIconCount.ToString() + "\r\nItem Icons Extracted: " + _TotalItemIconCount.ToString());
         }
 
         protected byte[] GetFileBytes(string Filename)
