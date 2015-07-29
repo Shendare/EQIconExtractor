@@ -1,4 +1,24 @@
-﻿using System;
+﻿/*
+ *  EQIconExtractor.cs - Application for extracting EverQuest spell icons and item icons to individual png images
+ *  
+ *  By Shendare (Jon D. Jackson)
+ * 
+ *  Portions of this code not covered by another author's or entity's copyright are released under
+ *  the Creative Commons Zero (CC0) public domain license.
+ *  
+ *  To the extent possible under law, Shendare (Jon D. Jackson) has waived all copyright and
+ *  related or neighboring rights to this EQIconExtractor application.
+ *  This work is published from: The United States. 
+ *  
+ *  You may copy, modify, and distribute the work, even for commercial purposes, without asking permission.
+ * 
+ *  For more information, read the CC0 summary and full legal text here:
+ *  
+ *  https://creativecommons.org/publicdomain/zero/1.0/
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +28,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Paloma;
-using KUtility;
+using DDS;
 
 namespace EQIconExtractor
 {
@@ -125,7 +145,7 @@ namespace EQIconExtractor
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return;
             }
@@ -172,11 +192,6 @@ namespace EQIconExtractor
 
                 for (int _itemIconSheet = 0; _itemIconSheet < 500; _itemIconSheet++)
                 {
-                    if (_itemIconSheet == 176)
-                    {
-                        _itemIconSheet = _itemIconSheet;
-                    }
-
                     if (File.Exists(_iconFileName = _InputFolder + @"\dragitem" + (_itemIconSheet + 1).ToString() + ".dds"))
                     {
                         int _iconIndex = 0;
@@ -185,16 +200,16 @@ namespace EQIconExtractor
 
                         byte[] _fileBytes = GetFileBytes(_iconFileName);
 
-                        DDSImage _iconSheet = new DDSImage(_fileBytes);
+                        DDSImage _iconSheet = DDSImage.Load(_fileBytes);
 
-                        while ((_x + _ItemIconSize.X) < _iconSheet.images[0].Width)
+                        while ((_x + _ItemIconSize.X) < _iconSheet.Images[0].Width)
                         {
                             string _outFile = _outPath + @"\" + ((_itemIconSheet * _ItemIconsPerFile) + _iconIndex + 500).ToString() + ".png";
 
-                            Bitmap _icon = new Bitmap(_ItemIconSize.X, _ItemIconSize.Y, _iconSheet.images[0].PixelFormat);
+                            Bitmap _icon = new Bitmap(_ItemIconSize.X, _ItemIconSize.Y, _iconSheet.Images[0].PixelFormat);
                             Graphics _blitter = Graphics.FromImage(_icon);
                             
-                            _blitter.DrawImage(_iconSheet.images[0], 0, 0, new Rectangle(_x, _y, _ItemIconSize.X, _ItemIconSize.Y), GraphicsUnit.Pixel);
+                            _blitter.DrawImage(_iconSheet.Images[0], 0, 0, new Rectangle(_x, _y, _ItemIconSize.X, _ItemIconSize.Y), GraphicsUnit.Pixel);
                             _blitter.Dispose();
                             _icon.Save(_outFile);
                             _icon.Dispose();
@@ -202,7 +217,7 @@ namespace EQIconExtractor
                             _iconIndex++;
                             _y += _ItemIconSize.Y + _ItemIconPadding.Y;
 
-                            if ((_y + _ItemIconSize.Y) >= _iconSheet.images[0].Height)
+                            if ((_y + _ItemIconSize.Y) >= _iconSheet.Images[0].Height)
                             {
                                 _y = 0;
                                 _x += _ItemIconSize.X + _ItemIconPadding.X;
@@ -221,7 +236,7 @@ namespace EQIconExtractor
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return;
             }
